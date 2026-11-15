@@ -6,10 +6,10 @@
   function pretty(n) { return n.replace(/[-_]/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }); }
   function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
   function cards(repos) {
-    return repos.map(function (r, i) {
+    return repos.map(function (r) {
       var url = r.homepage || ('https://' + HUB + '/' + r.name + '/');
-      return '<a class="card" style="--i:' + i + '" href="' + esc(url) + '"><span class="icon">' + icon(r.name) + '</span>' +
-        '<span class="txt"><h2>' + esc(pretty(r.name)) + '</h2><p>' + esc(r.description) + '</p></span><span class="go">›</span></a>';
+      return '<a class="card" href="' + esc(url) + '"><span class="icon">' + icon(r.name) + '</span>' +
+        '<span class="txt"><h3>' + esc(pretty(r.name)) + '</h3><p>' + esc(r.description) + '</p></span><span class="go">›</span></a>';
     }).join('') || '<p class="msg">Nothing here yet.</p>';
   }
   fetch('https://api.github.com/users/' + USER + '/repos?per_page=100&sort=pushed')
