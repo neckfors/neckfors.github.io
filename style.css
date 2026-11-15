@@ -11,8 +11,8 @@ body{margin:0;min-height:100vh;color:var(--text);font:17px/1.4 system-ui,"Segoe 
 .bg i:nth-child(5){--s:50px;--x:66%;--d:17s;--l:-8s}.bg i:nth-child(6){--s:130px;--x:78%;--d:28s;--l:-2s}
 .bg i:nth-child(7){--s:35px;--x:90%;--d:13s;--l:-5s}.bg i:nth-child(8){--s:75px;--x:46%;--d:20s;--l:-15s}
 @keyframes rise{to{transform:translateY(-120vh) rotate(180deg)}}
-main{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:40px 16px}
-header{text-align:center;margin-bottom:28px}
+main{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:40px 16px}
+header{text-align:center;margin-bottom:24px}
 h1{margin:0;font-size:3.2rem;letter-spacing:2px;text-shadow:0 4px 0 rgba(0,0,0,.18)}
 h1 span{display:inline-block;animation:bob 2.4s ease-in-out infinite}
 h1 span:nth-child(2n){animation-delay:.2s}h1 span:nth-child(3n){animation-delay:.4s}
@@ -42,3 +42,7 @@ header p{margin:6px 0 0;font-size:1.2rem;opacity:.95}
 footer{text-align:center;margin-top:32px}
 footer a{color:#fff;opacity:.85;text-decoration:none}footer a:hover{opacity:1;text-decoration:underline}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media (max-width:700px){.cols{grid-template-columns:1fr}}
+.head{margin:0 0 14px;font-size:1.5rem;text-align:center;text-shadow:0 3px 0 rgba(0,0,0,.18)}
+.card{flex-wrap:nowrap}
