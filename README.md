@@ -4,7 +4,7 @@ My hub page: **https://neckfors.github.io**
 
 It lists my public apps and games automatically. Any public repo with GitHub Pages turned on shows up as a row that opens the live app. Repos with the topic `game` go under Games, everything else under Apps. Forks, archived repos and this repo are left out. No edits are needed when I add a new app.
 
-Plain HTML, CSS and JS, no build step. One column: Games first, then Apps. Each row has small labels: "Play online" (games) or "Open" (apps), plus "Install on phone" when the app has an install file (manifest), found automatically. A slow dark gradient background, a still gradient title, and simple hover effects. Works on phones.
+Plain HTML, CSS and JS, no build step. One column: Games first, then Apps. Each row has small labels: "Play online" (games) or "Open" (apps), plus "Install on phone" when the app has an install file (manifest), found automatically (except Type Blaster, listed in `NO_INSTALL` in app.js). A slow dark gradient background, a still gradient title, and simple hover effects. Works on phones.
 
 ## Support
 

@@ -13,7 +13,9 @@
         '<span class="tags"><span class="tag">' + label + '</span></span><span class="go">›</span></a>';
     }).join('') || '<p class="msg">Nothing here yet.</p>';
   }
+  var NO_INSTALL = ['type-blaster'];
   function markInstallable(r) {
+    if (NO_INSTALL.indexOf(r.name) > -1) return;
     var base = urlOf(r);
     ['manifest.webmanifest', 'manifest.json'].reduce(function (p, f) {
       return p.then(function (ok) {
