@@ -25,7 +25,7 @@
     }, Promise.resolve(false)).then(function (ok) {
       if (!ok) return;
       var t = document.querySelector('.card[data-repo="' + r.name + '"] .tags');
-      if (t) t.insertAdjacentHTML('beforeend', '<span class="tag">Install on phone</span>');
+      if (t) t.insertAdjacentHTML('beforeend', '<span class="tag">Phone</span>');
     });
   }
   fetch('https://api.github.com/users/' + USER + '/repos?per_page=100&sort=pushed')
@@ -33,8 +33,8 @@
     .then(function (all) {
       var repos = all.filter(function (r) { return r.has_pages && !r.private && !r.fork && !r.archived && r.name !== HUB; });
       var isGame = function (r) { return (r.topics || []).indexOf('game') > -1; };
-      games.innerHTML = cards(repos.filter(isGame), 'Play online');
-      apps.innerHTML = cards(repos.filter(function (r) { return !isGame(r); }), 'Open');
+      games.innerHTML = cards(repos.filter(isGame), 'Web');
+      apps.innerHTML = cards(repos.filter(function (r) { return !isGame(r); }), 'Web');
       repos.forEach(markInstallable);
     })
     .catch(function () { games.innerHTML = '<p class="msg">Could not load the list. Try again in a minute.</p>'; });
