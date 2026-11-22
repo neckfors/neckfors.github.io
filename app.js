@@ -1,7 +1,7 @@
 (function () {
   var USER = 'neckfors', HUB = USER + '.github.io';
   var games = document.getElementById('games'), apps = document.getElementById('apps');
-  var ICONS = { tower: '🏰', life: '❤️', math: '🚀', rocket: '🚀', maze: '🌀', blaster: '⌨️', random: '🎲', dice: '🎲', deck: '🃏' };
+  var ICONS = { tower: '🏰', life: '❤️', math: '🚀', rocket: '🚀', maze: '🌀', blaster: '⌨️', random: '🎲', dice: '🎲', deck: '🃏', puzzle: '🧩' };
   function icon(n) { for (var k in ICONS) if (n.indexOf(k) > -1) return ICONS[k]; return '🎮'; }
   function pretty(n) { return n.replace(/[-_]/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }); }
   function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
