@@ -31,7 +31,7 @@
   fetch('https://api.github.com/users/' + USER + '/repos?per_page=100&sort=pushed')
     .then(function (r) { if (!r.ok) throw 0; return r.json(); })
     .then(function (all) {
-      var repos = all.filter(function (r) { return r.has_pages && !r.private && !r.fork && !r.archived && r.name !== HUB; });
+      var repos = all.filter(function (r) { return r.has_pages && !r.private && !r.fork && !r.archived && r.name !== HUB && (r.topics || []).indexOf('hidden') < 0; });
       var isGame = function (r) { return (r.topics || []).indexOf('game') > -1; };
       games.innerHTML = cards(repos.filter(isGame), 'Web');
       apps.innerHTML = cards(repos.filter(function (r) { return !isGame(r); }), 'Web');
