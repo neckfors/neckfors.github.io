@@ -23,6 +23,7 @@ section{margin-bottom:28px}
 .link::before{content:"";position:absolute;inset:-8px -3px}
 .link:hover,.link:focus-visible{background:var(--cardh);border-color:#fff;outline:none}
 .icon{font-size:2.2rem;line-height:1;flex:none}
+img.icon{width:48px;height:48px;border-radius:22%;display:block}
 .txt{flex:1;min-width:0}
 .txt h3{margin:0;font-size:1.15rem}
 .txt p{margin:2px 0 0;opacity:.8;font-size:.92rem}

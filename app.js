@@ -2,6 +2,11 @@
   var USER = 'neckfors', HUB = USER + '.github.io';
   var games = document.getElementById('games'), apps = document.getElementById('apps');
   var ICONS = { tower: '🏰', life: '❤️', math: '🚀', alarm: '⏰', book: '📚', rocket: '🚀', maze: '🌀', blaster: '⌨️', random: '🎲', dice: '🎲', deck: '🃏', puzzle: '🧩' };
+  // Apps and games with their own icon in icons/<repo>.png (the same one they are installed with); others get an emoji.
+  var PICS = ['alarm-clock-releases', 'bookshelf', 'fantasy-tower-defense', 'life-counter', 'math-clicker', 'randomizer', 'sliding-puzzle', 'type-blaster'];
+  function iconHtml(n) {
+    return PICS.indexOf(n) > -1 ? '<img class="icon" src="icons/' + n + '.png" alt="" width="48" height="48">' : '<span class="icon">' + icon(n) + '</span>';
+  }
   function icon(n) { for (var k in ICONS) if (n.indexOf(k) > -1) return ICONS[k]; return '🎮'; }
   function pretty(n) { return n.replace(/-releases$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }); }
   function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
@@ -16,7 +21,7 @@
         ? '<a class="tag link" href="https://github.com/' + USER + '/' + r.name + '/releases/latest" aria-label="Download the Android app">APK</a>' : '';
       var about = '<a class="tag link" href="' + esc(readmeUrl(r)) + '" aria-label="About ' + esc(pretty(r.name)) + '">About</a>';
       var web = r.has_pages ? '<span class="tag">' + label + '</span>' : '';
-      return '<div class="card" data-repo="' + esc(r.name) + '"><span class="icon">' + icon(r.name) + '</span>' +
+      return '<div class="card" data-repo="' + esc(r.name) + '">' + iconHtml(r.name) +
         '<span class="txt"><h3><a class="open" href="' + esc(urlOf(r)) + '">' + esc(pretty(r.name)) + '</a></h3><p>' + esc(r.description) + '</p></span>' +
         '<span class="tags">' + web + apk + about + '</span><span class="go">›</span></div>';
     }).join('') || '<p class="msg">Nothing here yet.</p>';
