@@ -11,13 +11,14 @@
   function urlOf(r) { return r.has_pages ? r.homepage || ('https://' + HUB + '/' + r.name + '/') : readmeUrl(r); }
   function cards(repos, label) {
     return repos.map(function (r) {
-      // The name's link covers the whole row; the APK label lies on top of it.
+      // The name's link covers the whole row; the APK and About links lie on top of it.
       var apk = hasApk(r)
-        ? '<a class="tag apk" href="' + esc(readmeUrl(r)) + '" aria-label="About and download the Android app">APK</a>' : '';
+        ? '<a class="tag link" href="https://github.com/' + USER + '/' + r.name + '/releases/latest" aria-label="Download the Android app">APK</a>' : '';
+      var about = '<a class="tag link" href="' + esc(readmeUrl(r)) + '" aria-label="About ' + esc(pretty(r.name)) + '">About</a>';
       var web = r.has_pages ? '<span class="tag">' + label + '</span>' : '';
       return '<div class="card" data-repo="' + esc(r.name) + '"><span class="icon">' + icon(r.name) + '</span>' +
         '<span class="txt"><h3><a class="open" href="' + esc(urlOf(r)) + '">' + esc(pretty(r.name)) + '</a></h3><p>' + esc(r.description) + '</p></span>' +
-        '<span class="tags">' + web + apk + '</span><span class="go">›</span></div>';
+        '<span class="tags">' + web + apk + about + '</span><span class="go">›</span></div>';
     }).join('') || '<p class="msg">Nothing here yet.</p>';
   }
   var NO_INSTALL = ['type-blaster'];
