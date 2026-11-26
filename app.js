@@ -1,16 +1,19 @@
 (function () {
   var USER = 'neckfors', HUB = USER + '.github.io';
   var games = document.getElementById('games'), apps = document.getElementById('apps');
-  var ICONS = { tower: '🏰', life: '❤️', math: '🚀', rocket: '🚀', maze: '🌀', blaster: '⌨️', random: '🎲', dice: '🎲', deck: '🃏', puzzle: '🧩' };
+  var ICONS = { tower: '🏰', life: '❤️', math: '🚀', book: '📚', rocket: '🚀', maze: '🌀', blaster: '⌨️', random: '🎲', dice: '🎲', deck: '🃏', puzzle: '🧩' };
   function icon(n) { for (var k in ICONS) if (n.indexOf(k) > -1) return ICONS[k]; return '🎮'; }
   function pretty(n) { return n.replace(/[-_]/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }); }
   function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
   function urlOf(r) { return r.homepage || ('https://' + HUB + '/' + r.name + '/'); }
   function cards(repos, label) {
     return repos.map(function (r) {
-      return '<a class="card" data-repo="' + esc(r.name) + '" href="' + esc(urlOf(r)) + '"><span class="icon">' + icon(r.name) + '</span>' +
-        '<span class="txt"><h3>' + esc(pretty(r.name)) + '</h3><p>' + esc(r.description) + '</p></span>' +
-        '<span class="tags"><span class="tag">' + label + '</span></span><span class="go">›</span></a>';
+      // The name's link covers the whole row; the APK label lies on top of it.
+      var apk = (r.topics || []).indexOf('apk') > -1
+        ? '<a class="tag apk" href="https://github.com/' + USER + '/' + esc(r.name) + '/releases/latest" aria-label="Download the Android app">APK ↓</a>' : '';
+      return '<div class="card" data-repo="' + esc(r.name) + '"><span class="icon">' + icon(r.name) + '</span>' +
+        '<span class="txt"><h3><a class="open" href="' + esc(urlOf(r)) + '">' + esc(pretty(r.name)) + '</a></h3><p>' + esc(r.description) + '</p></span>' +
+        '<span class="tags"><span class="tag">' + label + '</span>' + apk + '</span><span class="go">›</span></div>';
     }).join('') || '<p class="msg">Nothing here yet.</p>';
   }
   var NO_INSTALL = ['type-blaster'];
@@ -25,7 +28,7 @@
     }, Promise.resolve(false)).then(function (ok) {
       if (!ok) return;
       var t = document.querySelector('.card[data-repo="' + r.name + '"] .tags');
-      if (t) t.insertAdjacentHTML('beforeend', '<span class="tag">Phone</span>');
+      if (t) t.firstElementChild.insertAdjacentHTML('afterend', '<span class="tag">Phone</span>');
     });
   }
   fetch('https://api.github.com/users/' + USER + '/repos?per_page=100&sort=pushed')
