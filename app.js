@@ -3,27 +3,31 @@
   var games = document.getElementById('games'), apps = document.getElementById('apps');
   var ICONS = { tower: '🏰', life: '❤️', math: '🚀', alarm: '⏰', book: '📚', rocket: '🚀', maze: '🌀', blaster: '⌨️', random: '🎲', dice: '🎲', deck: '🃏', puzzle: '🧩' };
   // Apps and games with their own icon in icons/<repo>.png (the same one they are installed with); others get an emoji.
-  var PICS = ['alarm-clock-releases', 'bookshelf', 'fantasy-tower-defense', 'life-counter', 'math-clicker', 'randomizer', 'sliding-puzzle', 'type-blaster'];
+  var PICS = ['alarm-clock-releases', 'bookshelf', 'fantasy-tower-defense', 'life-counter', 'math-clicker', 'randomizer', 'sliding-puzzle', 'type-blaster', 'wallpaper-fx-screensaver'];
   function iconHtml(n) {
     return PICS.indexOf(n) > -1 ? '<img class="icon" src="icons/' + n + '.png" alt="" width="48" height="48">' : '<span class="icon">' + icon(n) + '</span>';
   }
   function icon(n) { for (var k in ICONS) if (n.indexOf(k) > -1) return ICONS[k]; return '🎮'; }
-  function pretty(n) { return n.replace(/-releases$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }); }
+  var NAMES = { 'wallpaper-fx-screensaver': 'Wallpaper FX' };
+  function pretty(n) { return NAMES[n] || n.replace(/-releases$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }); }
   function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
   function hasApk(r) { return (r.topics || []).indexOf('apk') > -1; }
+  function isWindows(r) { return (r.topics || []).indexOf('windows') > -1; }
   function readmeUrl(r) { return 'https://github.com/' + USER + '/' + r.name + '#readme'; }
-  // Android-only apps have no web page: the row opens the README, which has the download.
+  // Android and Windows apps have no web page: the row opens the README, which has the download.
   function urlOf(r) { return r.has_pages ? r.homepage || ('https://' + HUB + '/' + r.name + '/') : readmeUrl(r); }
   function cards(repos, label) {
     return repos.map(function (r) {
       // The name's link covers the whole row; the APK and About links lie on top of it.
       var apk = hasApk(r)
         ? '<a class="tag link" href="https://github.com/' + USER + '/' + r.name + '/releases/latest" aria-label="Download the Android app">APK</a>' : '';
+      var win = isWindows(r)
+        ? '<a class="tag link" href="https://github.com/' + USER + '/' + r.name + '/releases/latest" aria-label="Download the Windows app">Windows</a>' : '';
       var about = '<a class="tag link" href="' + esc(readmeUrl(r)) + '" aria-label="About ' + esc(pretty(r.name)) + '">About</a>';
       var web = r.has_pages ? '<span class="tag">' + label + '</span>' : '';
       return '<div class="card" data-repo="' + esc(r.name) + '">' + iconHtml(r.name) +
         '<span class="txt"><h3><a class="open" href="' + esc(urlOf(r)) + '">' + esc(pretty(r.name)) + '</a></h3><p>' + esc(r.description) + '</p></span>' +
-        '<span class="tags">' + web + apk + about + '</span><span class="go">›</span></div>';
+        '<span class="tags">' + web + apk + win + about + '</span><span class="go">›</span></div>';
     }).join('') || '<p class="msg">Nothing here yet.</p>';
   }
   var NO_INSTALL = ['type-blaster'];
@@ -44,7 +48,7 @@
   fetch('https://api.github.com/users/' + USER + '/repos?per_page=100&sort=pushed')
     .then(function (r) { if (!r.ok) throw 0; return r.json(); })
     .then(function (all) {
-      var repos = all.filter(function (r) { return (r.has_pages || hasApk(r)) && !r.private && !r.fork && !r.archived && r.name !== HUB && (r.topics || []).indexOf('hidden') < 0; });
+      var repos = all.filter(function (r) { return (r.has_pages || hasApk(r) || isWindows(r)) && !r.private && !r.fork && !r.archived && r.name !== HUB && (r.topics || []).indexOf('hidden') < 0; });
       var isGame = function (r) { return (r.topics || []).indexOf('game') > -1; };
       games.innerHTML = cards(repos.filter(isGame), 'Web');
       apps.innerHTML = cards(repos.filter(function (r) { return !isGame(r); }), 'Web');
